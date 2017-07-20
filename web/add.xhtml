@@ -1,0 +1,102 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
+    <h:head>
+        <title>Facelet Title</title>
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"/>
+         <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css"/>
+         <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+         <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+         <script>
+            $( function() {
+              $( ".datepicker" ).datepicker({ minDate: +0, maxDate: "+10D",dateFormat: 'dd/mm/yy' });
+            
+            } );
+          </script>
+    </h:head>
+    <h:body>
+                    <nav class="navbar navbar-inverse">
+              <div class="container-fluid">
+                <div class="navbar-header">
+                  <a class="navbar-brand" href="#">WeatherASM</a>
+                </div>
+                <ul class="nav navbar-nav">
+                  <li><h:link  value="Home" outcome="index"></h:link></li>
+                  <li><h:link  value="add" outcome="add"></h:link></li>
+                </ul>
+                      <h:form class="navbar-form navbar-right">
+                   <div class="input-group">
+                            <h:inputText class="form-control" value="#{weatherBean.place}"></h:inputText>  
+                    <div class="input-group-btn">
+                        <h:commandLink class="btn btn-default" action="${weatherBean.searchByPlace()}">
+                        <i class="glyphicon glyphicon-search"></i>
+                        </h:commandLink>
+
+                    </div>
+                  </div>
+
+                    </h:form>
+              </div>
+            </nav>
+        <div class="container" style="margin-top: 100px">
+                <div class="row">
+                    <div class="col-xs-12">
+                    <h:form>
+                <div class="form-group">
+                    <label for="place">Place</label>
+                    <h:selectOneMenu class="form-control" value = "#{weatherBean.place}" title="Place" required="true" requiredMessage="The place field is required">  
+                    <c:forEach var="p" items="#{weatherBean.arrCountry}">
+                    <f:selectItem itemValue = "#{p}" itemLabel = "#{p}" /> 
+                    </c:forEach> 
+                 </h:selectOneMenu> 
+                </div>
+                <div class="form-group">
+                    <label for="day">Day</label>
+                <h:inputText id="day" class="form-control datepicker" value="#{weatherBean.day}" title="Day" required="true" requiredMessage="The Day field is required"/>
+                </div>	
+                <div class="form-group">
+                    <label for="minTemp">Min Temperature</label>
+                    <h:inputText class="form-control" id="minTemp" value="#{weatherBean.minTemp}" title="MinTemp" required="true" requiredMessage="The MinTemp field is required"/>
+                </div>
+                
+                <div class="form-group">
+                    <label for="maxTemp">Max Temperature</label>
+                    <h:inputText class="form-control" id="maxTemp" value="#{weatherBean.maxTemp}" title="MaxTemp" required="true" requiredMessage="The MaxTemp field is required"/>
+                </div>
+                
+                <div class="form-group">
+                    <label for="weather">Weather</label>
+                <h:selectOneMenu class="form-control" id="weather" value = "#{weatherBean.weather}" title="Weather" required="true" requiredMessage="The Weather field is required">                     
+                    <f:selectItem itemValue = "Rainy" itemLabel = "Rainy" />
+                    <f:selectItem itemValue = "Stormy" itemLabel = "Stormy" />
+                    <f:selectItem itemValue = "Sunny" itemLabel = "Sunny" />
+                    <f:selectItem itemValue = "Cloudy" itemLabel = "Cloudy" />
+                    <f:selectItem itemValue = "Windy" itemLabel = "Windy" />
+                    <f:selectItem itemValue = "Humid" itemLabel = "Humid" />
+                </h:selectOneMenu>
+                </div>
+                
+                <div class="form-group">
+                <label for="wind">Wind</label>
+                <h:inputText class="form-control" id="wind" value="#{weatherBean.wind}" title="Wind" required="true" requiredMessage="The Wind field is required"/>
+                </div>
+
+                <div class="form-group">
+                    <label for="humidity">Humidity</label>
+                     <h:inputText class="form-control" id="humidity" value="#{weatherBean.humidity}" title="Humidity" required="true" requiredMessage="The Humidity field is required"/>
+                </div>
+                
+                
+                
+                <h:commandButton class="btn btn-primary" value="Add" action="#{weatherBean.addNewWeatherInform()}"></h:commandButton>
+        </h:form>
+                    </div>  
+                </div>
+            </div>
+        
+    </h:body>
+</html>
+

@@ -1,0 +1,404 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
+    <h:head>
+        <title>Facelet Title</title>
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"/>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+        
+        <style>
+            body{
+                color: white;
+                background-repeat: no-repeat;
+                background-size: cover;
+            }
+            .img{
+                height: 50px;
+                width: 50px;
+            }
+            .img1{
+                height: 100px;
+                width: 100px;
+            }
+            .col-xs-2{
+                margin-top: 35px;
+            }
+            .col-half-offset{
+                margin-left:4.166666667%
+            }
+            .day-content{
+                width: 100%;
+              
+            }
+            .maxTemp{
+                font-size: 20px;
+            }
+            .minTemp{
+                font-size: 15px;
+            }
+            .maxTemp1{
+                font-size: 35px;
+            }
+            .minTemp1{
+                font-size: 30px;
+            }
+            .weather{
+                font-size: 40px;
+            }
+            .place{
+                font-size: 35px;
+            }
+            
+            
+          .bubble 
+            {
+            position: relative;
+            
+            
+            padding: 0px;
+            -webkit-border-radius: 10px;
+            -moz-border-radius: 10px;
+            border-radius: 10px;
+            background: #cccccc;
+            opacity: 0.5;
+            }
+            
+
+            .bubble:after 
+            {
+            content: '';
+            position: absolute;
+            border-style: solid;
+            border-width: 0 15px 15px;
+            border-color: #ccc transparent;
+            display: block;
+            width: 0;
+            z-index: +1;
+            top: -15px;
+            left: 110px;
+            }
+        </style>
+    </h:head>
+    <h:body>
+                <nav class="navbar navbar-inverse">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <a class="navbar-brand" href="#">WeatherASM</a>
+    </div>
+    <ul class="nav navbar-nav">
+      <li><h:link  value="Home" outcome="index"></h:link></li>
+      <li><h:link  value="add" outcome="add"></h:link></li>
+    </ul>
+          <h:form class="navbar-form navbar-right">
+       <div class="input-group">
+                <h:inputText class="form-control" value="#{weatherBean.place}"></h:inputText>  
+        <div class="input-group-btn">
+            <h:commandLink class="btn btn-default" action="${weatherBean.searchByPlace()}">
+            <i class="glyphicon glyphicon-search"></i>
+            </h:commandLink>
+            
+        </div>
+      </div>
+ 
+        </h:form>
+  </div>
+</nav>
+        <c:if test="${weatherBean.arr[0].weather.equals('Rainy')}">
+            <script>
+                document.body.style.background = "url('resource/rainbg.jpg')";
+            </script>                   
+        </c:if>
+        <c:if test="${weatherBean.arr[0].weather.equals('Stormy')}">
+             <script>
+                document.body.style.background = "url('resource/stormbg.jpg')";
+            </script>            
+        </c:if>
+        <c:if test="${weatherBean.arr[0].weather.equals('Sunny')}">
+            <script>
+                document.body.style.background = "url('resource/sunbg.jpg')";
+            </script>                    
+        </c:if>
+        <c:if test="${weatherBean.arr[0].weather.equals('Cloudy')}">
+            <script>
+                document.body.style.background = "url('resource/cloudbg.jpg')";
+            </script>                      
+        </c:if>
+        <c:if test="${weatherBean.arr[0].weather.equals('Windy')}">
+            <script>
+                document.body.style.background = "url('resource/windbg.jpg')";
+            </script>                     
+        </c:if>
+        <c:if test="${weatherBean.arr[0].weather.equals('Humid')}">
+            <script>
+                document.body.style.background = "url('resource/humiditybg.jpg')";
+            </script>                     
+        </c:if>
+        <div class="container" style="margin-top: 100px">
+            <div class="row">
+                <div class="col-xs-12">
+                    <center>
+                        <div class="day-content">
+                            <h:outputText class="place" value="#{weatherBean.arr[0].place}"></h:outputText>
+                        </div>
+                        <div class="day-content">
+                            <c:if test="${weatherBean.arr[0].weather.equals('Rainy')}">
+                                <h:graphicImage class="img1" id="mainWeatherImg" value="resource/rain.png"/>
+                            </c:if>
+                            <c:if test="${weatherBean.arr[0].weather.equals('Stormy')}">
+                                <h:graphicImage class="img1" id="mainWeatherImg" value="resource/storm.png"/>
+                            </c:if>
+                            <c:if test="${weatherBean.arr[0].weather.equals('Sunny')}">
+                                <h:graphicImage class="img1" id="mainWeatherImg" value="resource/sun.png"/>
+                            </c:if>
+                            <c:if test="${weatherBean.arr[0].weather.equals('Cloudy')}">
+                                <h:graphicImage class="img1" id="mainWeatherImg" value="resource/cloud.png"/>
+                            </c:if>
+                            <c:if test="${weatherBean.arr[0].weather.equals('Windy')}">
+                                <h:graphicImage class="img1" id="mainWeatherImg" value="resource/wind.png"/>
+                            </c:if>
+                            <c:if test="${weatherBean.arr[0].weather.equals('Humid')}">
+                                <h:graphicImage class="img1" id="mainWeatherImg" value="resource/humidity.png"/>
+                            </c:if>
+                            <h:outputText class="weather" id="mainWeather" value="&nbsp; &nbsp; #{weatherBean.arr[0].weather}"></h:outputText>       
+                        </div>
+                        <div class="day-content">
+                         <h:outputText class="maxTemp1" id="mainMaxTemp" value="#{weatherBean.arr[0].maxTemp}°"></h:outputText>
+                        <h:outputText class="minTemp1" id="mainMinTemp" value="  #{weatherBean.arr[0].minTemp}°"></h:outputText>   
+                        </div>
+                        <div class="day-content">
+                            <h:outputText id="mainWind" value="Wind : #{weatherBean.arr[0].wind} km/h &nbsp;"></h:outputText>
+                            <h:outputText id="mainHumidity" value=" Humidity : #{weatherBean.arr[0].humidity} %"></h:outputText>  
+                        </div>
+                    </center>
+                </div>
+                <script>
+                    function ok(id,size){
+                        for (var i = 0; i &lt; size; i++) {
+     $("#p"+i).removeClass("bubble");
+}
+                        document.getElementById(id).className += " bubble";
+                       var place = "#{weatherBean.arr[0].place}";
+                       var id = id.slice(1);
+                         $.ajax({
+                    type: 'post',
+                    data: {place: place,id: id},
+                    url: 'WeatherController',                
+                    success: function(result){    
+                            var obj = jQuery.parseJSON(result);
+                            document.getElementById('mainWeather').innerHTML = "&nbsp; &nbsp; "+obj.weather;
+                            
+                            if(obj.weather=='Rainy')
+                                document.getElementById('mainWeatherImg').src = "resource/rain.png";
+                            if(obj.weather=='Stormy')
+                                document.getElementById('mainWeatherImg').src = "resource/storm.png";
+                            if(obj.weather=='Sunny')
+                                document.getElementById('mainWeatherImg').src = "resource/sun.png";
+                            if(obj.weather=='Cloudy')
+                                document.getElementById('mainWeatherImg').src = "resource/cloud.png";
+                            if(obj.weather=='Windy')
+                                document.getElementById('mainWeatherImg').src = "resource/wind.png";
+                            if(obj.weather=='Humid')
+                                document.getElementById('mainWeatherImg').src = "resource/humidity.png";
+                            
+                            
+                            document.getElementById('mainMaxTemp').innerHTML = obj.maxTemp+"° ";
+                            document.getElementById('mainMinTemp').innerHTML = obj.minTemp+"°";
+                            document.getElementById('mainWind').innerHTML = "Wind : "+obj.wind+" km/h &nbsp;";
+                            document.getElementById('mainHumidity').innerHTML = " Humidity : "+obj.humidity+" %";
+
+                    }
+                });
+                        
+                        
+}
+                </script>
+            </div>
+            <div class="row">
+               
+                <div class="bubble col-xs-2" id="p0" onclick="ok(this.id,#{weatherBean.arr.size()})"><center>
+            <div class="day-content">
+                <h:outputText value="#{weatherBean.arr[0].day}"></h:outputText>
+            </div>     
+            <div class="day-content">
+                <c:if test="${weatherBean.arr[0].weather.equals('Rainy')}">
+                    <h:graphicImage class="img" value="resource/rain.png"/>
+                </c:if>
+                <c:if test="${weatherBean.arr[0].weather.equals('Stormy')}">
+                    <h:graphicImage class="img" value="resource/storm.png"/>
+                </c:if>
+                <c:if test="${weatherBean.arr[0].weather.equals('Sunny')}">
+                    <h:graphicImage class="img" value="resource/sun.png"/>
+                </c:if>
+                <c:if test="${weatherBean.arr[0].weather.equals('Cloudy')}">
+                    <h:graphicImage class="img" value="resource/cloud.png"/>
+                </c:if>
+                <c:if test="${weatherBean.arr[0].weather.equals('Windy')}">
+                    <h:graphicImage class="img" value="resource/wind.png"/>
+                </c:if>
+                <c:if test="${weatherBean.arr[0].weather.equals('Humid')}">
+                    <h:graphicImage class="img" value="resource/humidity.png"/>
+                </c:if>
+            </div>
+            <div class="day-content">
+                <h:outputText class="maxTemp" value="#{weatherBean.arr[0].maxTemp}°"></h:outputText>
+                <h:outputText class="minTemp" value="  #{weatherBean.arr[0].minTemp}°"></h:outputText>
+            </div>
+            <div class="day-content">
+                <h:outputText value="#{weatherBean.arr[0].weather}"></h:outputText>
+            </div>       
+                    </center></div>
+                
+               
+                <c:if test="#{weatherBean.arr.size() lt 6}">
+                    <c:forEach var="p" begin="1" end="#{weatherBean.arr.size()-1}" step="1">
+                    <div class="col-xs-2 col-half-offset" id="p#{p}" onclick="ok(this.id,#{weatherBean.arr.size()})"><center>
+                    <div class="day-content">
+                <h:outputText value="#{weatherBean.arr[p].day}"></h:outputText>
+            </div>     
+            <div class="day-content">
+                <c:if test="${weatherBean.arr[p].weather.equals('Rainy')}">
+                    <h:graphicImage class="img" value="resource/rain.png"/>
+                </c:if>
+                <c:if test="${weatherBean.arr[p].weather.equals('Stormy')}">
+                    <h:graphicImage class="img" value="resource/storm.png"/>
+                </c:if>
+                <c:if test="${weatherBean.arr[p].weather.equals('Sunny')}">
+                    <h:graphicImage class="img" value="resource/sun.png"/>
+                </c:if>
+                <c:if test="${weatherBean.arr[p].weather.equals('Cloudy')}">
+                    <h:graphicImage class="img" value="resource/cloud.png"/>
+                </c:if>
+                <c:if test="${weatherBean.arr[p].weather.equals('Windy')}">
+                    <h:graphicImage class="img" value="resource/wind.png"/>
+                </c:if>
+                <c:if test="${weatherBean.arr[p].weather.equals('Humid')}">
+                    <h:graphicImage class="img" value="resource/humidity.png"/>
+                </c:if>
+            </div>
+            <div class="day-content">
+                <h:outputText class="maxTemp" value="#{weatherBean.arr[p].maxTemp}°"></h:outputText>
+                <h:outputText class="minTemp" value="  #{weatherBean.arr[p].minTemp}°"></h:outputText>
+            </div>
+            <div class="day-content">
+                <h:outputText value="#{weatherBean.arr[p].weather}"></h:outputText>
+            </div>  
+                        </center> </div>
+
+        </c:forEach>
+                </c:if>  
+                
+                <c:if test="#{weatherBean.arr.size() gt 5}">
+                <c:forEach var="p" begin="1" end="4" step="1">
+                    <div class="col-xs-2 col-half-offset" id="p#{p}" onclick="ok(this.id,#{weatherBean.arr.size()})"><center>
+                    <div class="day-content">
+                <h:outputText value="#{weatherBean.arr[p].day}"></h:outputText>
+            </div>     
+            <div class="day-content">
+                <c:if test="${weatherBean.arr[p].weather.equals('Rainy')}">
+                    <h:graphicImage class="img" value="resource/rain.png"/>
+                </c:if>
+                <c:if test="${weatherBean.arr[p].weather.equals('Stormy')}">
+                    <h:graphicImage class="img" value="resource/storm.png"/>
+                </c:if>
+                <c:if test="${weatherBean.arr[p].weather.equals('Sunny')}">
+                    <h:graphicImage class="img" value="resource/sun.png"/>
+                </c:if>
+                <c:if test="${weatherBean.arr[p].weather.equals('Cloudy')}">
+                    <h:graphicImage class="img" value="resource/cloud.png"/>
+                </c:if>
+                <c:if test="${weatherBean.arr[p].weather.equals('Windy')}">
+                    <h:graphicImage class="img" value="resource/wind.png"/>
+                </c:if>
+                <c:if test="${weatherBean.arr[p].weather.equals('Humid')}">
+                    <h:graphicImage class="img" value="resource/humidity.png"/>
+                </c:if>
+            </div>
+            <div class="day-content">
+                <h:outputText class="maxTemp" value="#{weatherBean.arr[p].maxTemp}°"></h:outputText>
+                <h:outputText class="minTemp" value="  #{weatherBean.arr[p].minTemp}°"></h:outputText>
+            </div>
+            <div class="day-content">
+                <h:outputText value="#{weatherBean.arr[p].weather}"></h:outputText>
+            </div>  
+                        </center></div>
+        </c:forEach>
+                   
+              <div class="col-xs-2" id="p5" onclick="ok(this.id,#{weatherBean.arr.size()})"><center>
+            <div class="day-content">
+                <h:outputText value="#{weatherBean.arr[5].day}"></h:outputText>
+            </div>     
+            <div class="day-content">
+                <c:if test="${weatherBean.arr[5].weather.equals('Rainy')}">
+                    <h:graphicImage class="img" value="resource/rain.png"/>
+                </c:if>
+                <c:if test="${weatherBean.arr[5].weather.equals('Stormy')}">
+                    <h:graphicImage class="img" value="resource/storm.png"/>
+                </c:if>
+                <c:if test="${weatherBean.arr[5].weather.equals('Sunny')}">
+                    <h:graphicImage class="img" value="resource/sun.png"/>
+                </c:if>
+                <c:if test="${weatherBean.arr[5].weather.equals('Cloudy')}">
+                    <h:graphicImage class="img" value="resource/cloud.png"/>
+                </c:if>
+                <c:if test="${weatherBean.arr[5].weather.equals('Windy')}">
+                    <h:graphicImage class="img" value="resource/wind.png"/>
+                </c:if>
+                <c:if test="${weatherBean.arr[5].weather.equals('Humid')}">
+                    <h:graphicImage class="img" value="resource/humidity.png"/>
+                </c:if>
+            </div>
+            <div class="day-content">
+                <h:outputText class="maxTemp" value="#{weatherBean.arr[5].maxTemp}°"></h:outputText>
+                <h:outputText class="minTemp" value="  #{weatherBean.arr[5].minTemp}°"></h:outputText>
+            </div>
+            <div class="day-content">
+                <h:outputText value="#{weatherBean.arr[5].weather}"></h:outputText>
+            </div>  
+        </center></div>
+                    
+             <c:forEach var="p" begin="6" end="#{weatherBean.arr.size()-1}" step="1">
+                    <div class="col-xs-2 col-half-offset" id="p#{p}" onclick="ok(this.id,#{weatherBean.arr.size()})"><center>
+                    <div class="day-content">
+                <h:outputText value="#{weatherBean.arr[p].day}"></h:outputText>
+            </div>     
+            <div class="day-content">
+                <c:if test="${weatherBean.arr[p].weather.equals('Rainy')}">
+                    <h:graphicImage class="img" value="resource/rain.png"/>
+                </c:if>
+                <c:if test="${weatherBean.arr[p].weather.equals('Stormy')}">
+                    <h:graphicImage class="img" value="resource/storm.png"/>
+                </c:if>
+                <c:if test="${weatherBean.arr[p].weather.equals('Sunny')}">
+                    <h:graphicImage class="img" value="resource/sun.png"/>
+                </c:if>
+                <c:if test="${weatherBean.arr[p].weather.equals('Cloudy')}">
+                    <h:graphicImage class="img" value="resource/cloud.png"/>
+                </c:if>
+                <c:if test="${weatherBean.arr[p].weather.equals('Windy')}">
+                    <h:graphicImage class="img" value="resource/wind.png"/>
+                </c:if>
+                <c:if test="${weatherBean.arr[p].weather.equals('Humid')}">
+                    <h:graphicImage class="img" value="resource/humidity.png"/>
+                </c:if>
+            </div>
+            <div class="day-content">
+                <h:outputText class="maxTemp" value="#{weatherBean.arr[p].maxTemp}°"></h:outputText>
+                <h:outputText class="minTemp" value="  #{weatherBean.arr[p].minTemp}°"></h:outputText>
+            </div>
+            <div class="day-content">
+                <h:outputText value="#{weatherBean.arr[p].weather}"></h:outputText>
+            </div>  
+                    </center></div>
+        </c:forEach>   
+                    
+                </c:if>
+  
+        </div>
+           
+        </div>
+    </h:body>
+</html>
+

@@ -1,0 +1,151 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
+    <h:head>
+        <title>Facelet Title</title>
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"/>
+        <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+        <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+        <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css"/>
+        <link rel="stylesheet" href="//resources/demos/style.css"/>
+        <script> 
+        $( function() {
+            var b = #{weatherBean.listCountry};
+    $( ".tags" ).autocomplete({
+      source: b
+    });
+  } );
+  </script>
+        <style>
+            .ui-helper-hidden-accessible {
+                display: none;
+            }
+            .img1{
+                height: 100px;
+                width: 100px;
+            }
+             body{
+                background-color: #ccc;
+            }
+            .day-content{
+                width: 100%;
+              
+            }
+            .maxTemp{
+                font-size: 20px;
+            }
+            .minTemp{
+                font-size: 15px;
+            }
+            .maxTemp1{
+                font-size: 35px;
+            }
+            .minTemp1{
+                font-size: 30px;
+            }
+            .weather{
+                font-size: 25px;
+            }
+            .place{
+                font-size: 20px;
+                font-weight: bold;
+            }
+        </style>
+    </h:head>
+    <h:body>
+        <nav class="navbar navbar-inverse">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <a class="navbar-brand" href="#">WeatherASM</a>
+    </div>
+    <ul class="nav navbar-nav">
+      <li><h:link  value="Home" outcome="index"></h:link></li>
+      <li><h:link  value="add" outcome="add"></h:link></li>
+    </ul>
+          <h:form class="navbar-form navbar-right">
+       <div class="input-group">
+                <h:inputText class="form-control" value="#{weatherBean.place}"></h:inputText>  
+        <div class="input-group-btn">
+            <h:commandLink class="btn btn-default" action="${weatherBean.searchByPlace()}">
+            <i class="glyphicon glyphicon-search"></i>
+            </h:commandLink>
+            
+        </div>
+      </div>
+         <h:outputScript rendered="#{weatherBean.showAlert}">
+   alert("Added !!!");
+</h:outputScript>
+        </h:form>
+  </div>
+</nav>
+        <div class="container" style="margin-top: 100px">
+                <div class="row">
+                    <div class="col-xs-12 col-md-offset-5">
+                        <h1>Welcome</h1>
+                    </div>
+                    <div class="col-xs-12 col-md-offset-4">
+                            <h3>Please choose your location</h3>
+                    </div>
+                    <div class="col-xs-12">
+                        <h:form>
+                            <div class="input-group">
+                                <h:inputText class="form-control tags" value="#{weatherBean.place}"></h:inputText>  
+                        <div class="input-group-btn">
+                            <h:commandLink class="btn btn-primary" action="${weatherBean.searchByPlace()}">
+                            <i class="glyphicon glyphicon-search"></i>
+                            </h:commandLink>
+
+                        </div>
+                      </div>    
+                            <h:outputText value="#{param['added']}" />
+                        </h:form>
+                        
+                    </div>   
+                </div>
+            <div class="row" style="margin-top: 100px;">
+                 <c:forEach var="p" begin="0" end="3" step="1">
+                     <div class="col-md-3">
+                        <div class="day-content">
+                            <center><h:outputText class="place" value="#{weatherBean.arrWeather.get(p).place}"></h:outputText></center>
+                        </div>
+                         <center><div class="day-content">
+                            <c:if test="${weatherBean.arrWeather.get(p).weather.equals('Rainy')}">
+                                <h:graphicImage class="img1" id="mainWeatherImg" value="resource/rain.png"/>
+                            </c:if>
+                            <c:if test="${weatherBean.arrWeather.get(p).weather.equals('Stormy')}">
+                                <h:graphicImage class="img1" id="mainWeatherImg" value="resource/storm.png"/>
+                            </c:if>
+                            <c:if test="${weatherBean.arrWeather.get(p).weather.equals('Sunny')}">
+                                <h:graphicImage class="img1" id="mainWeatherImg" value="resource/sun.png"/>
+                            </c:if>
+                            <c:if test="${weatherBean.arrWeather.get(p).weather.equals('Cloudy')}">
+                                <h:graphicImage class="img1" id="mainWeatherImg" value="resource/cloud.png"/>
+                            </c:if>
+                            <c:if test="${weatherBean.arrWeather.get(p).weather.equals('Windy')}">
+                                <h:graphicImage class="img1" id="mainWeatherImg" value="resource/wind.png"/>
+                            </c:if>
+                            <c:if test="${weatherBean.arrWeather.get(p).weather.equals('Humid')}">
+                                <h:graphicImage class="img1" id="mainWeatherImg" value="resource/humidity.png"/>
+                            </c:if>
+                            <h:outputText class="weather" id="mainWeather" value="&nbsp; &nbsp; #{weatherBean.arrWeather.get(p).weather}"></h:outputText>       
+                        </div></center>
+                         <center><div class="day-content">
+                         <h:outputText class="maxTemp1" id="mainMaxTemp" value="#{weatherBean.arrWeather.get(p).maxTemp}°"></h:outputText>
+                        <h:outputText class="minTemp1" id="mainMinTemp" value="  #{weatherBean.arrWeather.get(p).minTemp}°"></h:outputText>   
+                        </div></center>
+                         <center><div class="day-content">
+                            <h:outputText id="mainWind" value="Wind : #{weatherBean.arrWeather.get(p).wind} km/h &nbsp;"></h:outputText>
+                            <h:outputText id="mainHumidity" value=" Humidity : #{weatherBean.arrWeather.get(p).humidity} %"></h:outputText>  
+                        </div></center>
+                    </div>
+                 </c:forEach>
+            </div>
+        </div>
+        
+        
+    </h:body>
+</html>
+
